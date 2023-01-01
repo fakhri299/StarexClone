@@ -1,5 +1,5 @@
 """
-WSGI config for starexclone project.
+WSGI config for auth project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

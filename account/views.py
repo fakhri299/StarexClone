@@ -4,24 +4,21 @@ from rest_framework.response import Response
 from . import utils as custom_jwt
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
-from.serializers import RegisterSerializer,UserSerializer
+from.serializers import *
+from rest_framework.generics import ListCreateAPIView,CreateAPIView
 
 User = get_user_model()
 
 
 
-
-class RegisterApi(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-    permission_classes = [AllowAny]
+class RegisterApiView(CreateAPIView):
+    serializer_class=RegisterSerializer
+    queryset=User.objects.all()
 
 
 
 class Login(TokenObtainPairView):
-    permission_classes = [AllowAny,]
     def post(self, request, *args, **kwargs):
         data = super().post(request, *args, **kwargs)
 
@@ -40,6 +37,27 @@ class Login(TokenObtainPairView):
         data["user_details"] = user_details.data
         return Response(data)
 
+
+class UserDetail(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDestroy(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class CurrentUser(APIView):
+    def get(self, request):
+        try:
+            serializer = UserSerializer(request.user)
+            return Response(serializer.data)
+        except:
+            return Response({"detail": "Login olmamısınız"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
@@ -47,4 +65,4 @@ class LogoutView(APIView):
         response.data = {
             'message': 'success'
         }
-        return 
+        return response
