@@ -9,18 +9,20 @@ from django.contrib.auth.models import PermissionsMixin
 
 
 class UserManager(BaseUserManager):
-    def create_user(self,email,password,**extra_kwargs):
+    def create_user(self,email,password,password_again,**extra_kwargs):
         email=self.normalize_email(email)
 
-        user = self.model(email=email,password=password,**extra_kwargs)
+        user = self.model(email=email,**extra_kwargs)
 
         user.set_password(password)
+        user.set_password(password_again)
+        
 
         user.save()
         return user
 
 
-    def create_superuser(self,email, password, **extra_fields):
+    def create_superuser(self,email, password,password_again, **extra_fields):
         
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -30,12 +32,12 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(email, password,password_again, **extra_fields)
 
 
 from.choices import( 
 DAY_CHOICES,MONTH_CHOICES,
-GENDER_CHOCIES,DISTRICT_CHOICES)
+GENDER_CHOCIES,DISTRICT_CHOICES,ID_CARD_SERIA_CHOICES)
 
 
 
@@ -44,19 +46,23 @@ GENDER_CHOCIES,DISTRICT_CHOICES)
 
 class CustomUser(AbstractUser,PermissionsMixin):
     username=None
-    first_name=models.CharField(max_length=50,null=True)
-    last_name=models.CharField(max_length=50,null=True)
-    gender=models.CharField(max_length=50,choices=GENDER_CHOCIES,null=True)
-    day=models.CharField(max_length=10,choices=DAY_CHOICES,null=True)
-    month=models.CharField(max_length=20,choices=MONTH_CHOICES,null=True)
+    first_name=models.CharField(max_length=50,null=True,blank=True)
+    last_name=models.CharField(max_length=50,null=True,blank=True)
+    gender=models.CharField(max_length=50,choices=GENDER_CHOCIES,null=True,blank=True)
+    day=models.CharField(max_length=10,choices=DAY_CHOICES,null=True,blank=True)
+    month=models.CharField(max_length=20,choices=MONTH_CHOICES,null=True,blank=True)
     year= models.DecimalField(default=0, max_digits=2004, decimal_places=2)
     telephon=models.CharField(max_length=50,null=True)
     email=models.EmailField(max_length=50,unique=True)
     district=models.CharField(max_length=50,choices=DISTRICT_CHOICES)
-    id_card=models. CharField(max_length=50,null=True)
-    adress=models.CharField(max_length=50)
+    id_card_seria=models.CharField(max_length=20,choices=ID_CARD_SERIA_CHOICES,default='AZE')
+    fin_code=models.CharField( max_length=7,unique=True,null=True)
+    id_card_number=models.CharField(max_length=7,null=True,unique=True)
+    adress=models.CharField(max_length=50,null=True,blank=True)
     filial=models.CharField(max_length=50)
+    password_again=models.CharField(max_length=8,null=True,blank=True)
     promocode=models.IntegerField(null=True)
+    
 
     objects=UserManager()
 

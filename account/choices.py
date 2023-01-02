@@ -61,3 +61,12 @@ DISTRICT_CHOICES=(
     ('bakı','Bakı'),
     ('gəncə','Gəncə'),
 )
+
+
+
+ID_CARD_SERIA_CHOICES=(
+    ('aze','AZE'),
+    ('aa','AA'),
+    ('myi','MYİ'),
+    ('dyi','DYİ')
+)

@@ -2,16 +2,25 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import *
 from rest_framework.serializers import ModelSerializer
+from rest_framework.validators import ValidationError
 
 User=get_user_model()
 
 class RegisterSerializer(ModelSerializer):
     class Meta:
         model=User
-        fields=['first_name','last_name','gender','day','month','year','id_card','password','telephon','email','district','adress','filial','promocode']
+        fields=['first_name','last_name','gender','day','month','year','id_card_seria','fin_code','password','password_again','id_card_seria','telephon','email','district','adress','filial','promocode']
         extra_kwargs = {
             'password': {'write_only': True},
+            'password_again': {'write_only': True},
+
         }
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password_again']:
+            raise ValidationError('Passwords is not match')
+        return attrs
+        
 
         
 
@@ -27,6 +36,9 @@ class RegisterSerializer(ModelSerializer):
             filial=validated_data['filial'],
             promocode=validated_data['promocode'],
             password=validated_data['password'],
+            password_again=validated_data['password_again'],
+            id_card_seria=validated_data['id_card_seria'],
+            fin_code=validated_data['fin_code'],
             day=validated_data['day'],
             month=validated_data['month'],
             year=validated_data['year']
