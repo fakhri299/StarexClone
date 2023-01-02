@@ -36,7 +36,6 @@ class RegisterSerializer(ModelSerializer):
             filial=validated_data['filial'],
             promocode=validated_data['promocode'],
             password=validated_data['password'],
-            password_again=validated_data['password_again'],
             id_card_seria=validated_data['id_card_seria'],
             fin_code=validated_data['fin_code'],
             day=validated_data['day'],

@@ -9,20 +9,18 @@ from django.contrib.auth.models import PermissionsMixin
 
 
 class UserManager(BaseUserManager):
-    def create_user(self,email,password,password_again,**extra_kwargs):
+    def create_user(self,email,password,**extra_kwargs):
         email=self.normalize_email(email)
 
         user = self.model(email=email,**extra_kwargs)
 
         user.set_password(password)
-        user.set_password(password_again)
         
-
         user.save()
         return user
 
 
-    def create_superuser(self,email, password,password_again, **extra_fields):
+    def create_superuser(self,email, password, **extra_fields):
         
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -32,7 +30,7 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(email, password,password_again, **extra_fields)
+        return self.create_user(email, password, **extra_fields)
 
 
 from.choices import( 
