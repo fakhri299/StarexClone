@@ -29,7 +29,7 @@ urlpatterns = [
 
 
     path('admin/', admin.site.urls),
-    path('home', include('pages.urls')),
+    path('home', include('order.urls')),
     path('news/',include('news.urls')),
     path('shops/',include('shops.urls')),
     path('faq/',include('faq.urls')),

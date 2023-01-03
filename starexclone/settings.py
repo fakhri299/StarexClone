@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pages',
+
+    #apps
+    'order',
     'news',
     'shops',
     'faq',
@@ -46,7 +48,7 @@ INSTALLED_APPS = [
     'account',
     
 
-
+    #3rd party libraries
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',

@@ -49,7 +49,7 @@ class CustomUser(AbstractUser,PermissionsMixin):
     gender=models.CharField(max_length=50,choices=GENDER_CHOCIES,null=True,blank=True)
     day=models.CharField(max_length=10,choices=DAY_CHOICES,null=True,blank=True)
     month=models.CharField(max_length=20,choices=MONTH_CHOICES,null=True,blank=True)
-    year= models.DecimalField(default=0, max_digits=2004, decimal_places=2)
+    year= models.CharField(max_length=4,null=True,blank=True)
     telephon=models.CharField(max_length=50,null=True)
     email=models.EmailField(max_length=50,unique=True)
     district=models.CharField(max_length=50,choices=DISTRICT_CHOICES)
@@ -59,7 +59,7 @@ class CustomUser(AbstractUser,PermissionsMixin):
     adress=models.CharField(max_length=50,null=True,blank=True)
     filial=models.CharField(max_length=50)
     password_again=models.CharField(max_length=8,null=True,blank=True)
-    promocode=models.IntegerField(null=True)
+    promocode=models.CharField(max_length=10,null=True,blank=True)
     
 
     objects=UserManager()

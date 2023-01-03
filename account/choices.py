@@ -1,7 +1,7 @@
 MONTH_CHOICES=(
     ('yanvar','Yanvar'),
     ('fevral','Fevral'),
-    ('mart','Fart'),
+    ('mart','Mart'),
     ('aprel','Aprel'),
     ('may','May'),
     ('iyun','İyun'),
