@@ -1,8 +1,11 @@
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import *
 from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import ValidationError
+from rest_framework.serializers import ModelSerializer
+
+
+
 
 User=get_user_model()
 
@@ -46,10 +49,48 @@ class RegisterSerializer(ModelSerializer):
         return user
 
 
+
+
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model=Profile
+        exclude=['user']
+
+
+
 class UserSerializer(ModelSerializer):
+    profile=ProfileSerializer(read_only=True)
     class Meta:
         model=CustomUser
-        fields=['id','first_name','last_name','gender','telephon','email','district','adress','filial','promocode','day','month','year']
+        fields=['id','profile','first_name','last_name','gender','telephon','email','district','adress','filial','promocode','day','month','year']
         extra_kwargs={
             'password':{'write_only':True}
         }
+
+
+
+class DetailSerializer(ModelSerializer):
+    class Meta:
+        model=CountryDetail
+        fields='__all__'
+
+
+
+class CountryDetailSerializer(ModelSerializer):
+    detail=DetailSerializer()
+    class Meta:
+        model=Country
+        fields=['name','image','detail']
+
+
+class CountrySerializer(ModelSerializer):
+    class Meta:
+        model=Country
+        fields=['name','image']
+
+
+
+
+
+    
+

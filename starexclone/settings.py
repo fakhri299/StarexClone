@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #apps
-    'order',
     'news',
     'shops',
     'faq',

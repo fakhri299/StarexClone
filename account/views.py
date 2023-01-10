@@ -6,7 +6,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from.serializers import *
-from rest_framework.generics import ListCreateAPIView,CreateAPIView
+from rest_framework.generics import CreateAPIView,RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView,ListAPIView,RetrieveUpdateDestroyAPIView,RetrieveAPIView
+
 
 User = get_user_model()
 
@@ -38,14 +40,11 @@ class Login(TokenObtainPairView):
         return Response(data)
 
 
-class UserDetail(generics.RetrieveUpdateAPIView):
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-class UserDestroy(generics.DestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 
 class CurrentUser(APIView):
@@ -66,3 +65,27 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
+
+
+
+
+class CountryDetailApi(RetrieveAPIView):
+    serializer_class=CountryDetailSerializer
+    queryset=Country.objects.all()
+    lookup_field='slug'
+
+
+
+class CountryListApi(ListAPIView):
+    serializer_class=CountrySerializer
+    queryset=Country.objects.all()
+    
+
+
+        
+    
+  
+
+
+        
+
