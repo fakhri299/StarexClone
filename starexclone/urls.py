@@ -35,6 +35,7 @@ urlpatterns = [
     path('rates/',include('rates.urls')),
     path('contact/',include('contact.urls')),
     path('account/',include('account.urls')),
+    path('dashboard/',include('dashboard.urls'))
 
 
 

@@ -69,17 +69,6 @@ class LogoutView(APIView):
 
 
 
-class CountryDetailApi(RetrieveAPIView):
-    serializer_class=CountryDetailSerializer
-    queryset=Country.objects.all()
-    lookup_field='slug'
-
-
-
-class CountryListApi(ListAPIView):
-    serializer_class=CountrySerializer
-    queryset=Country.objects.all()
-    
 
 
         

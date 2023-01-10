@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rates',
     'contact',
     'account',
+    'dashboard',
     
 
     #3rd party libraries

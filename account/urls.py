@@ -13,8 +13,7 @@ urlpatterns = [
 
      
 
-    path('country',CountryListApi.as_view()),
-    path('country/<slug:slug>',CountryDetailApi.as_view()),
+   
 
 
     
