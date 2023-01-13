@@ -1,5 +1,20 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from account.models import CustomUser
+
+User=get_user_model()
+
+class Profile(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
+    created=models.DateTimeField(auto_now_add=True,null=True)
+    updated=models.DateTimeField(auto_now=True,null=True,)
+
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+
+
+
 
 class CountryDetail(models.Model):
     city=models.CharField(max_length=20,null=True,blank=True)
@@ -27,20 +42,44 @@ class Country(models.Model):
 
 
 
-User=get_user_model()
+class IncreaseBalance(models.Model):
 
-class Profile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
-    appeals=None
-    payment=models.CharField(max_length=50,null=True,blank=True)
-    serve_history=None
-    created=models.DateTimeField(auto_now_add=True,null=True)
-    updated=models.DateTimeField(auto_now=True,null=True)
+    CURRENCY_CHOICES=(
+        ('TL','tl'),
+        ('USD','usd')
+    )
+
+    owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name='balance',null=True)
+    card_number=models.CharField(max_length=16,unique=True)
+    born_date=models.CharField(max_length=4)
+    amount=models.BigIntegerField()
+    currency=models.CharField(max_length=3,choices=CURRENCY_CHOICES)
 
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.owner.user.first_name} {self.owner.user.last_name}'
 
+
+
+class Order(models.Model):
+    customer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='orders')
+    product_link=models.URLField()
+    qwantity=models.IntegerField()
+    size=models.CharField(max_length=50)
+    size=models.CharField(max_length=50)
+    cargo_price=models.FloatField()
+    product_price=models.FloatField()
+    notes=models.TextField(blank=True)
+    created=models.DateTimeField(auto_now_add=True)
+
+
+
+    class Meta:
+        verbose_name_plural='Sifarişler'
+
+
+    def __str__(self):
+        return self.product_link
 
 
 
