@@ -37,11 +37,11 @@ class CountrySerializer(ModelSerializer):
 class OrderSerializer(ModelSerializer):
 
     total_amount=serializers.SerializerMethodField()
-    customer=serializers.StringRelatedField(read_only=True)
+    
 
     class Meta:
         model=Order
-        fields=['product_link','qwantity','size','customer',
+        fields=['product_link','qwantity','size',
                 'size','cargo_price','product_price','total_amount','notes','created']
 
     def get_total_amount(self,obj):
@@ -51,9 +51,9 @@ class OrderSerializer(ModelSerializer):
 
 
 class IncreaseBalanceSerializer(ModelSerializer):
-    owner=serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model=IncreaseBalance
-        fields=['card_number','amount','born_date','currency','owner']
+        fields=['card_number','amount','born_date','currency',]
 
 

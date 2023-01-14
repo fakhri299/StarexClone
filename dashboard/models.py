@@ -8,6 +8,9 @@ class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     created=models.DateTimeField(auto_now_add=True,null=True)
     updated=models.DateTimeField(auto_now=True,null=True,)
+    orders=None
+    applies=None
+    balances=None
 
 
     def __str__(self):
@@ -49,7 +52,7 @@ class IncreaseBalance(models.Model):
         ('USD','usd')
     )
 
-    owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name='balance',null=True)
+   
     card_number=models.CharField(max_length=16,unique=True)
     born_date=models.CharField(max_length=4)
     amount=models.BigIntegerField()
@@ -62,10 +65,8 @@ class IncreaseBalance(models.Model):
 
 
 class Order(models.Model):
-    customer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='orders')
     product_link=models.URLField()
     qwantity=models.IntegerField()
-    size=models.CharField(max_length=50)
     size=models.CharField(max_length=50)
     cargo_price=models.FloatField()
     product_price=models.FloatField()
