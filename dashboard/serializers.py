@@ -6,11 +6,12 @@ from account.serializers import UserSerializer
 
 User=get_user_model()
 
+
 class ProfileSerializer(ModelSerializer):
+    orders=serializers.StringRelatedField(many=True)
     class Meta:
         model=Profile
-        fields='__all__'
-
+        fields=['orders','created','updated',]
 
 
 class DetailSerializer(ModelSerializer):
@@ -37,17 +38,21 @@ class CountrySerializer(ModelSerializer):
 class OrderSerializer(ModelSerializer):
 
     total_amount=serializers.SerializerMethodField()
+    customer=serializers.StringRelatedField(read_only=True)
     
 
     class Meta:
         model=Order
-        fields=['product_link','qwantity','size',
+        fields=['customer','product_link','qwantity','size',
                 'size','cargo_price','product_price','total_amount','notes','created']
 
     def get_total_amount(self,obj):
         total=obj.qwantity * obj.product_price
         total_price=total+obj.cargo_price+14
         return total_price
+
+   
+
 
 
 class IncreaseBalanceSerializer(ModelSerializer):

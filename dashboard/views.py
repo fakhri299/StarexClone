@@ -5,6 +5,7 @@ from rest_framework.generics import ListCreateAPIView,ListAPIView,RetrieveUpdate
 from.models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response 
+from rest_framework.generics import get_object_or_404
 
 
 class CountryDetailApi(RetrieveAPIView):
@@ -24,6 +25,30 @@ class CountryListApi(ListAPIView):
 class OrderApiView(CreateAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderSerializer
+    
+
+    def perform_create(self, serializer):
+        profile=self.request.user.profile
+        serializer.save(customer=profile)
+
+
+
+
+class ProfileDetail(RetrieveUpdateDestroyAPIView):
+    queryset=Profile.objects.all()
+    serializer_class=ProfileSerializer
+
+
+
+class IncreaseBalanceApiView(CreateAPIView):
+    serializer_class=IncreaseBalanceSerializer
+    queryset=IncreaseBalance.objects.all()
+
+    
+    
+
+
+
 
    
 
